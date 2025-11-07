@@ -60,10 +60,8 @@
 
 ### 示例演示
 **[Demo源代码下载地址](https://gitcode.com/sanpo/robot/tree/main/demo)**  
-<video width="640" height="360" controls="controls" autoplay="autoplay" loop="loop">
-<source src="images/taobao-github-spi-demo-video-2.2.3.mp4" type="video/mp4">
-你的浏览器不支持视频标签。
-</video>
+
+<img src="images/taobao-github-spi-demo-video-2.2.3.gif">
 
 
 ## <span id="s3"> 示例方案三：外接传感器(姿态传感器，压力传感器等) </span>
