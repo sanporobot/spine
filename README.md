@@ -38,8 +38,10 @@
 ##### 接线示例图
 ###### 1. Jetson Nano
 <img src="images/taobao-github-spi-jetson-2.2.1.png">
+
 ###### 2. 树莓派4B
 <img src="images/taobao-github-spi-pi-2.2.2.png">
+
 ### <span id="s3"> 示例方案三：外接传感器(姿态传感器，压力传感器等) </span>
 ##### 接线示例图
 ###### 1. IIC：MPU6050姿态传感器
