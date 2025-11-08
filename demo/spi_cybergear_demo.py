@@ -41,6 +41,134 @@ class CRC8:
 
 crc8_calculator = CRC8(polynomial=7)
 
+#=========================设置CAN总线的波特率=====================
+# SPI连接开发板，只需一条SPI总线，和两个CS片选通道，例如树莓派可以使用SPI通道0，片选通道0和1
+# 发送和接收的数据结构：固定帧头6个字节(0x45 0x54 0x45 0x54 0xFF 0x01)+CAN总线的编号 2个字节+波特率4个字节+固定帧尾4个字节(0x0D 0x0A 0x0D 0x0A)+预留4个字节(0x00 0x00 0x00 0x00)+CRC1个字节
+# spibus:                SPI总线
+# cs:                    SPI片选通道
+# cannum:                 CAN总线的编号，1，2，3，4
+# baudrate:              CAN总线的波特率，仅支持：1000000，500000，250000，125000
+#================================================================
+def sys_set_can_baudrate(spibus, cs, cannum, baudrate):
+    state = 0
+    # 检查CAN总线编号是否有效
+    if cannum not in [1, 2, 3, 4]:
+        raise ValueError("CAN总线编号必须为1、2、3或4")
+    # 检查波特率是否有效
+    if baudrate not in [1000000, 500000, 250000, 125000]:
+        raise ValueError("波特率必须为1000000、500000、250000或125000")
+    try:
+        spi = spidev.SpiDev()
+        # 打开SPI总线
+        spi.open(int(spibus), int(cs))
+        spi.max_speed_hz = 10000000  # 10 MHz（修正注释）
+        spi.mode = 0                # SPI模式0 (CPOL=0, CPHA=0)
+
+        # 固定帧头6个字节(0x45 0x54 0x45 0x54 0xFF 0x01)
+        frame_header = [0x45, 0x54, 0x45, 0x54, 0xFF, 0x01]
+        # CAN总线的编号 2个字节
+        canid_bytes = [cannum, 0x00]
+        # 波特率4个字节
+        baudrate_bytes = [
+            (baudrate >> 24) & 0xFF,
+            (baudrate >> 16) & 0xFF,
+            (baudrate >> 8) & 0xFF,
+            baudrate & 0xFF
+        ]
+        # 固定帧尾4个字节(0x0D 0x0A 0x0D 0x0A)
+        frame_tail = [0x0D, 0x0A, 0x0D, 0x0A]
+        # 预留4个字节(使用0x00填充)
+        reserved_bytes = [0x00, 0x00, 0x00, 0x00]
+        # 合并所有数据
+        full_data = frame_header + canid_bytes + baudrate_bytes + frame_tail + reserved_bytes
+        # 计算CRC值
+        crc = crc8_calculator.calculate(full_data)
+        # 添加CRC字节
+        full_data.append(crc)
+        # print(f"[SPI发送]: {[f'0x{byte:02X}' for byte in full_data]}")
+
+        # 使用xfer2发送数据并接收从设备的响应
+        spi.xfer2(full_data)
+        # 等待从设备准备数据
+        time.sleep(0.1) 
+    except KeyboardInterrupt:
+        state = -2
+        spi.close()
+        print("\nSPI连接已关闭")
+    except Exception as e:
+        state = -2
+        print(f"发生错误: {e}")
+        if spi is not None:
+            spi.close()
+    finally:
+        if spi is not None:
+            spi.close()
+    return state
+
+#=========================设置RS485总线的波特率=====================
+# SPI连接开发板，只需一条SPI总线，和两个CS片选通道，例如树莓派可以使用SPI通道0，片选通道0和1
+# 发送和接收的数据结构：固定帧头6个字节(0x45 0x54 0x45 0x54 0xFF 0x02)+RS485总线的编号 2个字节+波特率4个字节+停止位1个字节+奇偶校验位1个字节+数据位1个字节+固定帧尾4个字节(0x0D 0x0A 0x0D 0x0A)+预留1个字节(0x00)+CRC1个字节
+# spibus:                SPI总线
+# cs:                    SPI片选通道
+# rs485num:              RS485总线的编号，1，2，3，4
+# baudrate:              RS485总线的波特率
+# format:                停止位，1位停止位，2位停止位，默认为1
+# paritytype:            奇偶校验位，0为无校验，1为奇校验，2为偶校验，默认为0
+# datatype:              数据位，8位数据位，9位数据位，默认为8
+#================================================================
+def sys_set_rs485_baudrate(spibus, cs, rs485num, baudrate, format=1, paritytype=0, datatype=8):
+    state = 0
+    # 检查RS485总线编号是否有效
+    if rs485num not in [1, 2, 3, 4]:
+        raise ValueError("RS485总线编号必须为1、2、3或4")
+    try:
+        spi = spidev.SpiDev()
+        # 打开SPI总线
+        spi.open(int(spibus), int(cs))
+        spi.max_speed_hz = 10000000  # 10 MHz（修正注释）
+        spi.mode = 0                # SPI模式0 (CPOL=0, CPHA=0)
+
+        # 固定帧头6个字节(0x45 0x54 0x45 0x54 0xFF 0x02)
+        frame_header = [0x45, 0x54, 0x45, 0x54, 0xFF, 0x02]
+        # RS485总线的编号 2个字节
+        rs485id_bytes = [rs485num, 0x00]
+        # 波特率4个字节
+        baudrate_bytes = [
+            (baudrate >> 24) & 0xFF,
+            (baudrate >> 16) & 0xFF,
+            (baudrate >> 8) & 0xFF,
+            baudrate & 0xFF
+        ]
+        # 固定帧尾4个字节(0x0D 0x0A 0x0D 0x0A)
+        frame_tail = [0x0D, 0x0A, 0x0D, 0x0A]
+        # 预留1个字节(使用0x00填充)
+        reserved_bytes = [0x00]
+        # 合并所有数据
+        full_data = frame_header + rs485id_bytes + baudrate_bytes + [format, paritytype, datatype] + frame_tail + reserved_bytes
+        # 计算CRC值
+        crc = crc8_calculator.calculate(full_data)
+        # 添加CRC字节
+        full_data.append(crc)
+        print(f"[SPI发送]: {[f'0x{byte:02X}' for byte in full_data]}")
+
+        # 使用xfer2发送数据并接收从设备的响应
+        spi.xfer2(full_data)
+        # 等待从设备准备数据
+        time.sleep(0.01)
+    except KeyboardInterrupt:
+        state = -2
+        spi.close()
+        print("\nSPI连接已关闭")
+    except Exception as e:
+        state = -2
+        print(f"发生错误: {e}")
+        if spi is not None:
+            spi.close()
+    finally:
+        if spi is not None:
+            spi.close()
+    return state
+
 #=========================发送并接受扩展CAN帧=====================
 # SPI连接开发板，只需一条SPI总线，和两个CS片选通道，例如树莓派可以使用SPI通道0，片选通道0和1
 # 发送和接收的数据结构：固定帧头2个字节(0x45 0x54)+扩展帧CANID 4个字节+数据帧8个字节+固定帧尾2个字节(0x0D 0x0A)+预留4个字节(0x00 0x00 0x00 0x10)+CRC1个字节
@@ -74,7 +202,7 @@ def send_extended_frame_main(spibus, cs, arbitration_id, data):
             data_bytes.extend([0x00] * (8 - len(data_bytes)))
         # 固定帧尾2个字节(0x0D 0x0A)
         frame_tail = [0x0D, 0x0A]
-        # 预留4个字节(使用ox00填充)
+        # 预留4个字节(使用0x00填充)
         reserved_bytes = [0x00, 0x00, 0x00, 0x10]
         # 合并所有数据
         full_data = frame_header + extended_id + data_bytes + frame_tail + reserved_bytes
@@ -90,8 +218,8 @@ def send_extended_frame_main(spibus, cs, arbitration_id, data):
         # spi接收的固定数据长度为21个字节，最后一个字节为CRC值
         if len(rx_data) != 21:
             print("接收数据长度错误")
-            ret = -1
-            return ret
+            state = -1
+            return(state,data_part)
         # 分离数据和CRC
         data_part = rx_data[:20]  # 实际数据部分
         # 从接收到的数据中提取CRC值
@@ -716,18 +844,32 @@ def motor_motion_test(spibus=0, cs=0, motorID=3):
             print("按下 Ctrl+C,结束----")
             break
 
+
+
 import argparse
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="这是一个示例脚本。")
-    parser.add_argument("--cmd", help="1: 置负载端零角度。 2: 电机停止。", default="6")
+    parser.add_argument("--cmd", help="1: 置负载端零角度。 2: 电机停止。", default="2")
     parser.add_argument("--spibus", help="0 or 1", default="0")
-    parser.add_argument("--cs", help="0 or 1", default="0")
-    parser.add_argument("--motorid", help="motor id", default="3")
+    parser.add_argument("--cs", help="0 or 1", default="1")
+    parser.add_argument("--motorid", help="motor id", default="9")
     args = parser.parse_args()
     motorID = decimal_to_hexadecimal(int(args.motorid))
     spibus = int(args.spibus)
     cs = int(args.cs)
+    
+    # 小米CyberGear电机CAN总线要求1000000波特率，设置4个CAN通道的波特率为1000000
+    sys_set_can_baudrate(0, 0, 1, 1000000)
+    sys_set_can_baudrate(0, 0, 2, 1000000)
+    sys_set_can_baudrate(0, 1, 3, 1000000)
+    sys_set_can_baudrate(0, 1, 4, 1000000)
+    # 宇树GM8010电机RS485总线要求4000000波特率，设置4个RS485通道的波特率为4000000
+    sys_set_rs485_baudrate(0, 0, 1, 4000000)
+    sys_set_rs485_baudrate(0, 0, 2, 4000000)
+    sys_set_rs485_baudrate(0, 1, 3, 4000000)
+    sys_set_rs485_baudrate(0, 1, 4, 4000000)
+
     if args.cmd == "1":
         set_motor_angle_zero(spibus, cs, motorID)
     elif args.cmd == "2":
@@ -746,8 +888,8 @@ if __name__ == "__main__":
         motor_motion_test(spibus, cs, motorID)
     elif args.cmd == "5":
         #------设置一条腿3个电机或者两条腿6个电机来回转动一定弧度, 假设Motor ID号为1,2,3,10,11,12
-        one_leg_motion_test(spibus, cs, 1, 2, 3)
-        #two_leg_motion_test(spibus, cs, 1, 2, 3, 10, 11, 12)
+        #one_leg_motion_test(spibus, cs, 1, 2, 3)
+        two_leg_motion_test(spibus, cs, 1, 2, 3, 10, 11, 12)
     elif args.cmd == "6":
         #------设置四条腿12个电机来回转动一定弧度, 假设Motor ID号为1,2,3,4,5,6,7,8,9,10,11,12
         cs1 = 0
