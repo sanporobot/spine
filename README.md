@@ -69,7 +69,7 @@
 #### 1. IIC：MPU6050姿态传感器
 #### 2. ADC：压力传感器
 <img src="images/taobao-sensor-3.1.1.png">
-### 示例演示
+### 示例演示  
 **[Demo源代码下载地址](https://gitcode.com/sanpo/robot/tree/main/demo)**  
 
 <img src="images/taobao-sensor-video-3.1.1.gif">
