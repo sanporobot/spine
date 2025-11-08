@@ -65,8 +65,13 @@
 
 
 ## <span id="s3"> 示例方案三：外接传感器(姿态传感器，压力传感器等) </span>
-##### 接线示例图
-###### 1. IIC：MPU6050姿态传感器
-###### 2. ADC：压力传感器
+### 接线示例图
+#### 1. IIC：MPU6050姿态传感器
+#### 2. ADC：压力传感器
+<img src="images/taobao-sensor-3.1.1.png">
+### 示例演示
+**[Demo源代码下载地址](https://gitcode.com/sanpo/robot/tree/main/demo)**  
+
+<img src="images/taobao-sensor-video-3.1.1.gif">
 
 ## <span id="s4"> 示例方案四：MIT Cheetash SPINE固件 </span>
