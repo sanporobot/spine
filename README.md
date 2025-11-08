@@ -56,7 +56,7 @@
 <img src="images/taobao-github-spi-jetson-2.2.1.png">
 
 ### 2. 树莓派4B
-<img src="images/taobao-github-spi-pi-2.2.2.png">
+<img src="images/taobao-github-spi-pi-2.2.2.png">  
 
 ### 示例演示
 **[Demo源代码下载地址](https://gitcode.com/sanpo/robot/tree/main/demo)**  
