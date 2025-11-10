@@ -864,11 +864,6 @@ if __name__ == "__main__":
     sys_set_can_baudrate(0, 0, 2, 1000000)
     sys_set_can_baudrate(0, 1, 3, 1000000)
     sys_set_can_baudrate(0, 1, 4, 1000000)
-    # 宇树GM8010电机RS485总线要求4000000波特率，设置4个RS485通道的波特率为4000000
-    sys_set_rs485_baudrate(0, 0, 1, 4000000)
-    sys_set_rs485_baudrate(0, 0, 2, 4000000)
-    sys_set_rs485_baudrate(0, 1, 3, 4000000)
-    sys_set_rs485_baudrate(0, 1, 4, 4000000)
 
     if args.cmd == "1":
         set_motor_angle_zero(spibus, cs, motorID)
