@@ -59,8 +59,8 @@
 <img src="images/taobao-github-spi-pi-2.2.2.png">  
 
 ### 示例演示
-**[Demo源代码下载地址](https://gitcode.com/sanpo/robot/tree/main/demo)**  
-
+**[小米Cyber电机Demo源代码下载地址](https://gitcode.com/sanpo/robot/blob/main/demo/spi_demo/cybergear)**  
+**[宇树GO-GM8010-6电机Demo源代码下载地址](https://gitcode.com/sanpo/robot/blob/main/demo/spi_demo/unitree)**  
 <img src="images/taobao-github-spi-demo-video-2.2.3.gif">
 
 
