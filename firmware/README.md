@@ -1,6 +1,6 @@
 # SANPO兴普智能 - 机器人集成开发板
 
-## 固件选择 ##
+## 如何选择固件 ##
 开发板支持如下两种固件
 ### SANPO原厂固件
 [下载地址](https://gitcode.com/sanpo/robot/blob/main/firmware/STM32CubeIDE/Release/sanpo_robot_spine_board_firmware-latest.bin)  
@@ -16,7 +16,7 @@
 适用场景：学习Cheetash运动控制原理。  
 提示：开发调试难度高，因为源代码MIT团队已不再维护，mbedos框架也已经停止维护，并且不支持常用电机通信协议，不建议用于实际项目开发。
 
-## 更新固件
+## 如何更新固件
 ### SANPO原厂固件更新
 1. 使用STLINK工具，连接开发板的STLINK接口到PC。
 2. 板载两个STLINK接口，分别对应两个STM32F407芯片，用户需要根据开发板上的丝印，选择对应的STLINK接口。对两颗STM32F407芯片分别进行固件更新。
