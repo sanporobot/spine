@@ -86,3 +86,19 @@ STM32固件更新参考
 <img src="images/taobao-sensor-video-3.1.1.gif">  
 
 ## <span id="s4"> 示例方案四：MIT Cheetash SPINE固件 </span>
+建议使用SANPO原厂固件，MIT Cheetash SPINE固件不支持USB和传感器接入，不支持小米CyberGear和宇树电机。  
+使用MIT Cheetash SPINE固件时，需要注意，SANPO开发板与MIT SPINE STM32芯片针脚定义的对应关系，如下表所示：  
+|    功能     | SANPO开发板 | MIT SPINE |
+| :---------- | :----------: | :---------: |
+|   芯片      | STM32F407 | STM32F446 |
+| 串口(TX)    | PA_6      | PC_2
+| 串口(RX)    | PA_7      | PC_3
+| CAN1(TX)   | PB_9      | PB_13
+| CAN1(RX)   | PB_8      | PB_12
+| CAN2(TX)   | PB_6      | PB_9
+| CAN2(RX)   | PB_5      | PB_8
+| SPI(MOSI)  | PC_12     | PA_7
+| SPI(MISO)  | PC_11     | PA_6
+| SPI(SCLK)  | PC_10     | PA_5
+| SPI(CS)    | PA_15     | PA_4
+| ESTOP      | PD_0      | PB_15
