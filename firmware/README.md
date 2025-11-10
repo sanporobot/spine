@@ -13,6 +13,7 @@
 5. 支持小米CyberGear，宇树电机通信协议和官方调试工具。
 
 ### MIT Cheetash SPINE固件
+[源代码地址](https://gitcode.com/sanpo/robot/blob/main/firmware/mbedos)  
 适用场景：学习Cheetash运动控制原理。  
 提示：开发调试难度高，因为源代码MIT团队已不再维护，mbedos框架也已经停止维护，并且不支持常用电机通信协议，不建议用于实际项目开发。
 
@@ -28,3 +29,7 @@
 <img src="images/update_firmware_stm32.png">  
 
 ### MIT Cheetash SPINE固件更新
+1. 下载mbedos官方IDE工具[mbed studio](https://os.mbed.com/studio/)并且安装。
+2. 打开mbed studio，选择File->Import Project，导入MIT Cheetash SPINE固件的源代码。
+3. 连接开发板到PC，选择Target->MCUs and custom targets->STM32F407VETx。
+4. 点击Build program按钮，编译项目并将编译好的固件刷入开发板。
