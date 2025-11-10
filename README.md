@@ -71,12 +71,17 @@
 ## <span id="s3"> 示例方案三：外接传感器(姿态传感器，压力传感器等) </span>
 ### 接线示例图
 #### 1. IIC：MPU6050姿态传感器
-#### 2. ADC：压力传感器
+#### 2. ADC：FSR402压力传感器
 
 <img src="images/taobao-sensor-3.1.1.png">  
 
-### 示例演示  
-**[Demo源代码下载地址](https://gitcode.com/sanpo/robot/tree/main/demo)**  
+### 示例演示
+MPU6050姿态传感器使用IIC接口接收数据，FSR402压力传感器使用ADC接口接收数据，串口用于输出传感器数据
+传感器协议解析在STM32固件中实现，用户可以根据需要自定义传感器协议解析代码。
+**[固件源代码下载](https://gitcode.com/sanpo/robot/tree/main/firmware/STM32CubeIDE)**  
+STM32固件更新参考
+**[如何更新固件](https://gitcode.com/sanpo/robot/tree/main/firmware)**  
+注意：选择SANPO原厂固件，MIT Cheetash SPINE固件不支持传感器接入。
 
 <img src="images/taobao-sensor-video-3.1.1.gif">  
 
