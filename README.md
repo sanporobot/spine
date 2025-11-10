@@ -81,7 +81,7 @@ MPU6050姿态传感器使用IIC接口接收数据，FSR402压力传感器使用A
 **[固件源代码下载](https://gitcode.com/sanpo/robot/tree/main/firmware/STM32CubeIDE)**  
 STM32固件更新参考  
 **[如何更新固件](https://gitcode.com/sanpo/robot/tree/main/firmware)**  
-注意：选择SANPO原厂固件，MIT Cheetash SPINE固件不支持传感器接入。  
+注意：请选择SANPO原厂固件，MIT Cheetash SPINE固件不支持传感器接入。  
 
 <img src="images/taobao-sensor-video-3.1.1.gif">  
 
