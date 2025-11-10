@@ -87,7 +87,7 @@ STM32固件更新参考
 
 ## <span id="s4"> 示例方案四：MIT Cheetash SPINE固件 </span>
 建议使用SANPO原厂固件，MIT Cheetash SPINE固件不支持USB和传感器接入，不支持小米CyberGear和宇树电机。  
-使用MIT Cheetash SPINE固件时，需要注意，SANPO开发板与MIT SPINE STM32芯片针脚定义的对应关系，如下表所示：  
+使用MIT Cheetash SPINE固件时，需要注意，SANPO开发板与MIT SPINE STM32芯片引脚定义的对应关系，如下表所示：  
 |    功能     | SANPO开发板 | MIT SPINE |
 | :---------- | :----------: | :---------: |
 |   控制芯片   | STM32F407 | STM32F446 |
