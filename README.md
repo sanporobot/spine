@@ -90,7 +90,7 @@ STM32固件更新参考
 使用MIT Cheetash SPINE固件时，需要注意，SANPO开发板与MIT SPINE STM32芯片针脚定义的对应关系，如下表所示：  
 |    功能     | SANPO开发板 | MIT SPINE |
 | :---------- | :----------: | :---------: |
-|   芯片      | STM32F407 | STM32F446 |
+|   控制芯片   | STM32F407 | STM32F446 |
 | 串口(TX)    | PA_6      | PC_2
 | 串口(RX)    | PA_7      | PC_3
 | CAN1(TX)   | PB_9      | PB_13
