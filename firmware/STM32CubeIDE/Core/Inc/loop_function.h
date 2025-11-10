@@ -1,9 +1,3 @@
-/*
- * loop_function.h
- *
- *  Created on: Aug 13, 2025
- *      Author: puwan
- */
 
 #ifndef INC_LOOP_FUNCTION_H_
 #define INC_LOOP_FUNCTION_H_
