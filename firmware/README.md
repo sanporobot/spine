@@ -3,7 +3,7 @@
 ## 固件选择 ##
 开发板支持如下两种固件
 ### SANPO原厂固件
-[下载地址](https://gitcode.com/sanpo/robot/tree/main/firmware/STM32CubeIDE/Release)  
+[下载地址](https://gitcode.com/sanpo/robot/blob/main/firmware/STM32CubeIDE/Release/sanpo_robot_spine_board_firmware-latest.bin)  
 
 适用场景：
 1. 提供STM32CubeIDE开发工程源码，方便用户进行二次开发。
