@@ -51,7 +51,7 @@
 
 ### 小米CyberGear电机官方调试软件  
 **[下载地址](https://gitcode.com/sanpo/robot/blob/main/tools/CyberGear.zip)**  
-注意：路径中不能有中文，否则软件无法启动  
+注意：保存路径中不能有中文，否则软件无法启动  
 **[使用说明](https://gitcode.com/sanpo/robot/blob/main/tools/CyberGear.pdf)**  
 
 <img src="images/taobao-github-cybergear-2.2.2.png"> 
