@@ -26,8 +26,11 @@
 ## 开发板接口图 ##
 <span id="p2"><img src="images/taobao-github-architect-1.2.png"></span>
 
-## 实用案例 ##
-**[OpenPaws 四足机器狗](https://gitcode.com/wangpuhk1/openpaws)**  
+## 关节电机控制协议说明 ##
+- **[USB转CAN总线电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p1)**
+- **[USB转RS485总电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p2)**
+- **[SPI转CAN总线电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p3)**
+- **[SPI转RS485总电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p4)**
 
 ## 应用方案示例 ##
 - **[示例方案一：机器人关节电机控制(USB控制输入)](#s1)**  
