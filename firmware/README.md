@@ -2,15 +2,13 @@
 
 ## 如何选择固件 ##
 开发板支持如下两种固件
-### SANPO原厂开源固件
-[源代码地址](https://gitcode.com/sanpo/robot/blob/main/firmware/STM32CubeIDE)  
+### SANPO原厂固件
 
 适用场景：
-1. 提供STM32CubeIDE开发工程源码，方便用户进行二次开发。
-2. 集成FreeRTOS框架，支持实时多任务并发执行。
-3. 同时支持CAN总线和RS485总线通信。
-4. 支持USB，IIC，SPI，串口，ADC等接口，方便用户进行扩展。
-5. 支持小米CyberGear，宇树电机通信协议和官方调试工具。
+1. 集成FreeRTOS，支持实时多任务并发执行。
+2. 同时支持CAN总线和RS485总线通信。
+3. 支持USB，IIC，SPI，串口，ADC等接口，方便用户进行扩展。
+4. 支持小米CyberGear，宇树电机通信协议和官方调试工具。
 
 ### MIT Cheetash SPINE固件
 [源代码地址](https://gitcode.com/sanpo/robot/blob/main/firmware/mit_cheetash_spine)  
