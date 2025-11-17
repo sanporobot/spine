@@ -1,7 +1,7 @@
 # SANPO兴普智能 - 机器人集成开发板
 
 **[官方淘宝商城](https://h5.m.taobao.com/awp/core/detail.htm?ft=t&id=979678214285)**
-
+  
 ## 功能描述 ##
 - 支持**4**路**CAN**总线，**4**路**RS485**总线
 - 支持**小米CyberGear**，**宇树GM**系列等常用关节电机
@@ -11,7 +11,7 @@
 - 支持**5V/3.3V**电源输出，提供**树莓派，Nvidia Jetson**等上位机供电
 - 兼容**MIT Cheetash SPINE**硬件设计标准
 
-
+<img width="300" src="images/taobao-link.png">
 
 ## 开发板设计架构 ##
 - 开发板集成2个STM32F4模块。
