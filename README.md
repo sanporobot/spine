@@ -1,6 +1,6 @@
 # SANPO兴普智能 - 机器人集成开发板
 
-**[官方淘宝商城](https://h5.m.taobao.com/awp/core/detail.htm?ft=t&id=979678214285)**
+**[官方淘宝商城](https://item.taobao.com/item.htm?ft=t&id=979678214285)**
   
 ## 功能描述 ##
 - 支持**4**路**CAN**总线，**4**路**RS485**总线
