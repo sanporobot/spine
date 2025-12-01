@@ -112,3 +112,4 @@ STM32固件更新参考
 ## 常见问题 ##
 - **[如何固件二次开发](https://gitcode.com/sanpo/robot/blob/main/firmware/STM32CubeIDE/README.md)**
 - **[如何更新固件](https://gitcode.com/sanpo/robot/blob/main/firmware/README.md#p1)**
+- **[板载STM32芯片引脚定义完整图谱](https://gitcode.com/sanpo/robot/blob/main/firmware/README.md#p1)**
