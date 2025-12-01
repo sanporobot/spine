@@ -33,3 +33,57 @@
 2. 打开mbed studio，选择File->Import Project，导入MIT Cheetash SPINE固件的源代码。
 3. 使用STLINK连接线，连接板载STM32芯片STLINK接口到PC，选择Target->MCUs and custom targets->STM32F407VETx。
 4. 点击Build program按钮，编译项目并将编译好的固件刷入开发板。
+
+### <span id="p2">板载STM32芯片引脚定义完整图谱</span>
+- 板载芯片 STM32F407(1)
+|     功能接口    | 引脚定义 | 对应STM32芯片引脚 |
+| :---------- | :----------: | :---------: |
+| ADC接口1    | AD1   | PB0
+| ADC接口1    | AD2   | PB1
+| 串口1       | TX    | PD8 
+| 串口1       | RX    | PD9
+| SPI接口     | CS1   | PA15
+| SPI接口     | SCK  | PC10
+| SPI接口     | MISO  | PC11
+| SPI接口     | MOSI  | PC12
+| 预留接口    | ESTOP/RSDV   | PD0
+| IIC接口1    | SCL   | PB10
+| IIC接口1    | SDA   | PB11
+| SWD调试接口1  | SWDIO   | PA13
+| SWD调试接口1  | SWCLK   | PA14
+| RS485-2  | RX   | PC6
+| RS485-2  | TX   | PC7
+| RS485-1  | RX   | PB6
+| RS485-1  | TX   | PB7
+| CAN2   | RX   | PB12
+| CAN2   | TX   | PB13
+| CAN1   | RX   | PB8
+| CAN1   | TX   | PB9
+
+- 板载芯片 STM32F407(2)
+|     功能接口    | 引脚定义 | 对应STM32芯片引脚 |
+| :---------- | :----------: | :---------: |
+| ADC接口2    | AD1   | PB0
+| ADC接口2    | AD2   | PB1
+| 串口2       | TX    | PD8 
+| 串口2       | RX    | PD9
+| SPI接口     | CS2   | PA15
+| SPI接口     | SCK  | PC10
+| SPI接口     | MISO  | PC11
+| SPI接口     | MOSI  | PC12
+| 预留接口    | ESTOP/RSDV   | PD0
+| IIC接口2    | SCL   | PB10
+| IIC接口2    | SDA   | PB11
+| SWD调试接口2  | SWDIO   | PA13
+| SWD调试接口2  | SWCLK   | PA14
+| RS485-3  | RX   | PB6
+| RS485-3  | TX   | PB7
+| RS485-4  | RX   | PC6
+| RS485-4  | TX   | PC7
+| CAN3   | RX   | PB8
+| CAN3   | TX   | PB9
+| CAN4   | RX   | PB12
+| CAN4   | TX   | PB13
+
+<img src="../images/taobao-github-architect-1.2.png">
+<img src="images/sanpo_spine_sch.png">

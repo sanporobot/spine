@@ -54,9 +54,9 @@ uint16_t tx_buff[TX_LEN];
 DigitalOut led(PC_5);
 
 
-UnbufferedSerial       pc(PC_6, PC_7);
+UnbufferedSerial       pc(PD_8, PD_9);
 CAN          can1(PB_8, PB_9, 1000000);  // CAN Rx pin name, CAN Tx pin name
-CAN          can2(PB_5, PB_6, 1000000);  // CAN Rx pin name, CAN Tx pin name
+CAN          can2(PB_12, PB_13, 1000000);  // CAN Rx pin name, CAN Tx pin name
 
 CANMessage   rxMsg1, rxMsg2;
 CANMessage   txMsg1, txMsg2;
@@ -562,7 +562,7 @@ void init_spi(void){
 int main() {
     //rtos::ThisThread::sleep_for(1000ms);
     //led = 1;
-    pc.baud(921600);
+    pc.baud(115200);
     pc.attach(&serial_isr);
     estop.mode(PullUp);
     //spi.format(16, 0);
