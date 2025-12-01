@@ -19,8 +19,8 @@
 
 ## 如何更新固件
 ### SANPO原厂固件更新
-1. 使用STLINK工具，连接开发板的STLINK接口到PC。
-2. 板载两个STLINK接口，分别对应两个STM32F407芯片，用户需要根据开发板上的丝印，选择对应的STLINK接口。对两颗STM32F407芯片分别进行固件更新。
+1. 更新固件前，请准备好STLINK连接线，将开发板的芯片STLINK接口到PC。
+2. 板载两个STLINK接口，分别对应两颗STM32F407芯片，用户需要根据开发板上的丝印，选择对应的STLINK接口。对两颗STM32F407芯片分别进行固件更新。
 3. 下载ST官方提供的[STM32CubeProgrammer](https://gitcode.com/sanpo/robot/blob/main/firmware/tools/STM32CubeProgrammer_win64.zip)软件并且安装。
 4. 下载最新的原厂固件  
 **[sanpo_robot_spine_board_firmware-latest.bin](https://gitcode.com/sanpo/robot/blob/main/firmware/STM32CubeIDE/Release/sanpo_robot_spine_board_firmware-latest.bin)**
