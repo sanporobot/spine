@@ -35,7 +35,6 @@
 - **[SPI转CAN总线电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p3)**
 - **[SPI转RS485总电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p4)**
 
-
 ## 应用方案示例 ##
 - **[示例方案一：机器人关节电机控制(USB控制输入)](#s1)**  
 - **[示例方案二：机器人关节电机控制(SPI控制输入)](#s2)**  
@@ -109,3 +108,7 @@ STM32固件更新参考
 | SPI(SCLK)  | PC_10     | PA_5
 | SPI(CS)    | PA_15     | PA_4
 | ESTOP      | PD_0      | PB_15
+
+## 常见问题 ##
+- **[如何固件二次开发](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p2)**
+- **[如何更新固件](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p1)**
