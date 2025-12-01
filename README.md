@@ -110,5 +110,5 @@ STM32固件更新参考
 | ESTOP      | PD_0      | PB_15
 
 ## 常见问题 ##
-- **[如何固件二次开发](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p2)**
-- **[如何更新固件](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p1)**
+- **[如何固件二次开发](https://gitcode.com/sanpo/robot/blob/main/firmware/STM32CubeIDE/README.md)**
+- **[如何更新固件](https://gitcode.com/sanpo/robot/blob/main/firmware/README.md#p1)**
