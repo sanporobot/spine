@@ -19,7 +19,7 @@
 
 ## <span id="p2">如何更新固件</span>
 ### SANPO原厂固件更新
-1. 更新固件前，请准备好STLINK连接线，将开发板的芯片STLINK接口到PC。
+1. 更新固件前，请准备好STLINK连接线，连接板载STM32芯片STLINK接口到PC。
 2. 板载两个STLINK接口，分别对应两颗STM32F407芯片，用户需要根据开发板上的丝印，选择对应的STLINK接口。对两颗STM32F407芯片分别进行固件更新。
 3. 下载ST官方提供的[STM32CubeProgrammer](https://gitcode.com/sanpo/robot/blob/main/firmware/tools/STM32CubeProgrammer_win64.zip)软件并且安装。
 4. 下载最新的原厂固件  
@@ -31,5 +31,5 @@
 ### MIT Cheetash SPINE固件更新
 1. 下载mbedos官方IDE工具[mbed studio](https://os.mbed.com/studio/)并且安装。
 2. 打开mbed studio，选择File->Import Project，导入MIT Cheetash SPINE固件的源代码。
-3. 使用STLINK工具，连接开发板的STLINK接口到PC，选择Target->MCUs and custom targets->STM32F407VETx。
+3. 使用STLINK连接线，连接板载STM32芯片STLINK接口到PC，选择Target->MCUs and custom targets->STM32F407VETx。
 4. 点击Build program按钮，编译项目并将编译好的固件刷入开发板。
