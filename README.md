@@ -32,6 +32,9 @@
 - **[SPI转CAN总线电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p3)**
 - **[SPI转RS485总电机](https://gitcode.com/sanpo/robot/blob/main/demo/README.md#p4)**
 
+## 开发板3D模型图 ##
+**[下载地址](https://gitcode.com/sanpo/robot/tree/main/3D_model/3D_SANPO_SPINE.step)**  
+
 ## 应用方案示例 ##
 - **[示例方案一：机器人关节电机控制(USB控制输入)](#s1)**  
 - **[示例方案二：机器人关节电机控制(SPI控制输入)](#s2)**  
