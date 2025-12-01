@@ -36,3 +36,6 @@
 - 在左侧导航栏中 双击打开 stm32f407V2.ioc 文件，可以查看芯片的引脚定义，进行二次开发  
 <img src="../images/stm32cubeide_import_04.png">  
 4. 开发完成，将编译成功的固件文件，下载到板载芯片，详情请查看[如何更新固件](https://gitcode.com/sanpo/robot/blob/main/firmware/README.md)  
+
+### 芯片引脚定义原理图  
+<img src="../images/sanpo_spine_sch.png">
