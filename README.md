@@ -97,8 +97,8 @@ STM32固件更新参考
 |    功能     | SANPO开发板 | MIT SPINE |
 | :---------- | :----------: | :---------: |
 |   控制芯片   | STM32F407 | STM32F446 |
-| 串口(TX)    | PD_8      | PC_2
-| 串口(RX)    | PD_9      | PC_3
+| 串口(TX)    | PD_8      | PA_2
+| 串口(RX)    | PD_9      | PA_3
 | CAN1(TX)   | PB_9      | PB_13
 | CAN1(RX)   | PB_8      | PB_12
 | CAN2(TX)   | PB_13      | PB_9
