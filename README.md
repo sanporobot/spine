@@ -24,7 +24,7 @@
 <img src="images/taobao-github-architect-1.1.png">
 
 ## 开发板接口图 ##
-<span id="p2"><img src="images/taobao-github-architect-1.2.png"></span>
+<span id="p2"><img src="images/taobao-github-architect-1.2-2.png"></span>
 
 ## 开发板3D模型图 ##
 **[下载地址](https://gitcode.com/sanpo/robot/tree/main/3D_model/3D_SANPO_SPINE.step)**  
