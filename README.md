@@ -43,7 +43,7 @@
 
 ## <span id="s1"> 示例方案一：机器人关节电机控制(USB控制输入) </span>
 ### 接线示例图
-<img src="images/taobao-github-usb-2.1.1.png">
+<img src="images/taobao-github-usb-2.1.1.png"> 
 
 ### 宇树电机官方调试软件  
 **[下载地址](https://gitcode.com/sanpo/robot/blob/main/tools/UnitreeMotor.zip)**  
