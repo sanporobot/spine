@@ -428,8 +428,8 @@ void StartI2CRXTask(void *argument)
   	if(MPU_Init(&hi2c2)==0)
   	{
   		MPU_Read_Len(&hi2c2, 0x3B, mpu_len, mpu_data);
+  		HAL_UART_Transmit_DMA(&huart3, mpu_data, mpu_len);
   	}
-		HAL_UART_Transmit_DMA(&huart3, mpu_data, mpu_len);
 		HAL_Delay(1000);
   }
   /* USER CODE END StartI2CRXTask */
@@ -445,31 +445,18 @@ void StartI2CRXTask(void *argument)
 void StartADCRXTask(void *argument)
 {
   /* USER CODE BEGIN StartADCRXTask */
-	uint16_t value_adc;
-	uint8_t value_len;
-  /* Infinite loop */
   for(;;)
   {
   	HAL_ADC_Start(&hadc1);//开始ADC采集
   	HAL_ADC_PollForConversion(&hadc1,500);//等待采集结束
-  	if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_REG_EOC))//读取ADC完成标志位
-  	{
-  		value_adc = HAL_ADC_GetValue(&hadc1);//读出ADC数值
-  		value_len = sizeof(value_adc);
-  		HAL_Delay(1000);
-  	}
-
-		HAL_UART_Transmit_DMA(&huart3, (uint8_t*)&value_adc, value_len);
+  	// ADC传感器数据处理
 
   	HAL_ADC_Start(&hadc2);//开始ADC采集
   	HAL_ADC_PollForConversion(&hadc2,500);//等待采集结束
-  	if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc2), HAL_ADC_STATE_REG_EOC))//读取ADC完成标志位
-  	{
-  		value_adc = HAL_ADC_GetValue(&hadc2);//读出ADC数值
-  		value_len = sizeof(value_adc);
-  		HAL_Delay(1000);
-  	}
-		HAL_UART_Transmit_DMA(&huart3, (uint8_t*)&value_adc, value_len);
+  	// ADC传感器数据处理
+  	// HAL_UART_Transmit_DMA(&huart3, (uint8_t*)&value_adc, value_len);
+
+  	HAL_Delay(1000);
   }
   /* USER CODE END StartADCRXTask */
 }
