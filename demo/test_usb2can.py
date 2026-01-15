@@ -234,7 +234,7 @@ def main() -> None:
     port = port_input or "/dev/ttyACM0"
     baud_input = input("Baudrate (default 1000000, Enter to use): ").strip()
     baudrate = 1000000 if not baud_input else int(baud_input)
-    mode = input("Mode: [1] normal [2] advanced: ").strip()
+    mode = input("Mode: [1] normal(For Extended CAN) [2] advanced(For Extended CAN & Standard CAN): ").strip()
     if mode == "1":
         run_normal_mode(port, baudrate)
     elif mode == "2":
