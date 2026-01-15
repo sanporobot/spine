@@ -30,7 +30,7 @@
 | --------- | --------- | --------- | --------- | --------- |
 | CAN标准帧ID<br>或者CAN扩展帧ID前11位 | CAN扩展帧ID后18位 | 1表示帧类型为扩展帧，0表示帧类型为标准帧 | 1表示远程帧，0表示数据帧 | 固定为0 |
 
-高级模式样例程序请参考[测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)
+高级模式Python样例程序请参考[测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)
 
 ``` Python
 # CAN 标准帧 代码样例
