@@ -17,9 +17,10 @@
 - 启动小米电机调试软件，系统会自动进入高级模式，无需手动切换
 - 手动切换普通模式，发送 AT+ET 串口指令
 - 手动切换高级模式，发送 AT+AT 串口指令
-- 在集成开发前，可以使用我们的[python 测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)进行包括普通模式和高级模式的数据发送和接收测试
+- 在集成开发前，可以使用我们的[测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)进行包括普通模式和高级模式的数据发送和接收测试
 
 ### 高级模式示例
+发送数据前请先发送 AT+AT 切换到高级模式。
 | 固定帧头(2字节) | 帧标识符(4字节) | 帧数据长度(1字节) | 帧数据(最大8字节) | 固定帧尾部(2字节) |  
 | --------- | --------- | --------- | --------- | --------- |
 | 0x41 0x54 | 0x00 0x00 0x00 0x00 | 0x08 | 0x48 0x45 0x4C 0x4F 0x01 0x02 0x03 0x04 | 0x0D 0x0A |
@@ -28,6 +29,52 @@
 | Bit31-Bit21 | Bit20-Bit3 | Bit2 | Bit1 | Bit0 |  
 | --------- | --------- | --------- | --------- | --------- |
 | CAN标准帧ID<br>或者CAN扩展帧ID前11位 | CAN扩展帧ID后18位 | 1表示帧类型为扩展帧，0表示帧类型为标准帧 | 1表示远程帧，0表示数据帧 | 固定为0 |
+
+高级模式样例程序请参考[测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)
+
+```
+# CAN 标准帧 代码样例
+# 先发送 AT+AT 切换到高级模式
+# ======== 发送数据封装（标准帧）========
+# 标准帧使用 11 位 CANID，IDE=0，RTR=0/1
+std_can_id = 0x142  # 11-bit 标准帧 CANID
+rtr_bit = 0         # 0=数据帧，1=远程帧
+# 标准帧帧标识符：Bit31-Bit21 放 CANID，Bit2=IDE，Bit1=RTR
+frame_id_val = (std_can_id << 21) | (rtr_bit << 1) | (0 << 2)
+frame_id_bytes = frame_id_val.to_bytes(4, "big")  # 4字节大端序
+dlc = 8  # 数据长度 0~8
+# 高级模式完整帧：帧头(0x41 0x54) + 标识符 + DLC + 数据 + 帧尾(0x0D 0x0A)
+payload = b"\x41\x54" + frame_id_bytes + bytes([dlc]) + data_bytes[:dlc] + b"\x0D\x0A"
+
+# ======== 接收数据的解析（标准帧）========
+# 从返回帧中取到的标识符 4 字节，解析出 IDE/RTR 和标准帧 CANID
+frame_id_val = int.from_bytes(frame_id_bytes, "big")
+ide_bit = (frame_id_val >> 2) & 0x01
+rtr_bit = (frame_id_val >> 1) & 0x01
+std_can_id = (frame_id_val >> 21) & 0x7FF  # 11位标准帧ID
+
+
+# CAN 扩展帧 代码样例
+# 先发送 AT+AT 切换到高级模式
+# ======== 发送封装（扩展帧）========
+# 扩展帧使用 29 位 CANID，IDE=1，RTR=0/1
+ext_can_id = 0x0000FD01  # 29-bit 扩展帧 CANID
+rtr_bit = 0              # 0=数据帧，1=远程帧
+# 扩展帧帧标识符：CANID 左移 3 位，Bit2=IDE，Bit1=RTR
+frame_id_val = (ext_can_id << 3) | (rtr_bit << 1) | (1 << 2)
+frame_id_bytes = frame_id_val.to_bytes(4, "big")  # 4字节大端序
+dlc = 8  # 数据长度 0~8
+# 高级模式完整帧：帧头(0x41 0x54) + 标识符 + DLC + 数据 + 帧尾(0x0D 0x0A)
+payload = b"\x41\x54" + frame_id_bytes + bytes([dlc]) + data_bytes[:dlc] + b"\x0D\x0A"
+
+# ======== 接收解析（扩展帧）========
+# 从返回帧中取到的标识符 4 字节，解析出 IDE/RTR 和扩展帧 CANID
+frame_id_val = int.from_bytes(frame_id_bytes, "big")
+ide_bit = (frame_id_val >> 2) & 0x01
+rtr_bit = (frame_id_val >> 1) & 0x01
+ext_can_id = (frame_id_val >> 3) & 0x1FFFFFFF  # 29位扩展帧ID
+
+```
 
 ### 小米CyberGear电机官方调试软件  
 **[下载地址](https://gitcode.com/sanpo/robot/blob/main/tools/CyberGear.zip)**  
