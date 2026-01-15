@@ -37,7 +37,7 @@
 # 先发送 AT+AT 切换到高级模式
 # ======== 发送数据封装（标准帧）========
 # 标准帧使用 11 位 CANID，IDE=0，RTR=0/1
-std_can_id = 0x142  # 11-bit 标准帧 CANID
+std_can_id = 0x142  # 11-bit 标准帧 CANID, 需要替换为实际的CANID
 rtr_bit = 0         # 0=数据帧，1=远程帧
 # 标准帧帧标识符：Bit31-Bit21 放 CANID，Bit2=IDE，Bit1=RTR
 frame_id_val = (std_can_id << 21) | (rtr_bit << 1) | (0 << 2)
@@ -58,7 +58,7 @@ std_can_id = (frame_id_val >> 21) & 0x7FF  # 11位标准帧ID
 # 先发送 AT+AT 切换到高级模式
 # ======== 发送封装（扩展帧）========
 # 扩展帧使用 29 位 CANID，IDE=1，RTR=0/1
-ext_can_id = 0x0000FD01  # 29-bit 扩展帧 CANID
+ext_can_id = 0x0000FD01  # 29-bit 扩展帧 CANID, 需要替换为实际的CANID
 rtr_bit = 0              # 0=数据帧，1=远程帧
 # 扩展帧帧标识符：CANID 左移 3 位，Bit2=IDE，Bit1=RTR
 frame_id_val = (ext_can_id << 3) | (rtr_bit << 1) | (1 << 2)
