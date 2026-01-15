@@ -1,4 +1,5 @@
 import time
+from typing import Optional, Tuple
 
 import serial
 
@@ -19,7 +20,7 @@ def format_hex_no_prefix(data: bytes) -> str:
 
 
 def parse_hex_bytes(
-    prompt: str, expected_len: int | None, default: bytes | None = None
+    prompt: str, expected_len: Optional[int], default: Optional[bytes] = None
 ) -> bytes:
     while True:
         raw = input(prompt).strip()
@@ -58,7 +59,7 @@ def bytes_to_int_be(data: bytes) -> int:
     return int.from_bytes(data, byteorder="big", signed=False)
 
 
-def parse_frame_identifier(frame_id: bytes) -> tuple[int, bool, bool]:
+def parse_frame_identifier(frame_id: bytes) -> Tuple[int, bool, bool]:
     value = int.from_bytes(frame_id, byteorder="big", signed=False)
     is_extended = bool((value >> 2) & 0x1)
     is_remote = bool((value >> 1) & 0x1)
@@ -90,7 +91,7 @@ def wait_for_ok(ser: serial.Serial, total_timeout_s: float = 2.0) -> bool:
 
 
 def send_and_receive(
-    payload: bytes, handshake: bytes | None, port: str, baudrate: int
+    payload: bytes, handshake: Optional[bytes], port: str, baudrate: int
 ) -> bytes:
     with serial.Serial(port, baudrate=baudrate, timeout=0.1) as ser:
         ser.reset_input_buffer()
@@ -109,7 +110,7 @@ def send_and_receive(
     return response
 
 
-def parse_advanced_response(response: bytes) -> tuple[bytes, int, bytes] | None:
+def parse_advanced_response(response: bytes) -> Optional[Tuple[bytes, int, bytes]]:
     header = HEADER_ADVANCED
     tail = TAIL
     start = response.find(header)
@@ -150,7 +151,7 @@ def run_normal_mode(port: str, baudrate: int) -> None:
     print(
         "Normal mode format: "
         "header(0x45 0x54) + CANID(4 bytes) + data(8 bytes) + tail(0x0D 0x0A). "
-        "Before sending data, use AT+ET to switch to normal mode."
+        "AT+ET to switch to normal mode."
     )
     can_id_bytes = parse_hex_bytes(
         "CANID 4 bytes (default 00 00 FD 01, Enter to use): ",
@@ -171,7 +172,7 @@ def run_advanced_mode(port: str, baudrate: int) -> None:
         "Advanced mode format: "
         "header(0x41 0x54) + frame_id(4 bytes) + dlc(1 byte) + "
         "data(0-8 bytes) + tail(0x0D 0x0A). "
-        "Before sending data, use AT+AT to switch to advanced mode."
+        "AT+AT to switch to advanced mode."
     )
     frame_type = input("Frame type: [1] standard [2] extended :").strip()
     if frame_type == "1":
