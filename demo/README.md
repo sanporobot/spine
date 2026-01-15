@@ -32,7 +32,7 @@
 
 高级模式样例程序请参考[测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)
 
-```
+``` Python
 # CAN 标准帧 代码样例
 # 先发送 AT+AT 切换到高级模式
 # ======== 发送数据封装（标准帧）========
