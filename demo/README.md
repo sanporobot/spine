@@ -43,12 +43,13 @@ python3 test_usb2can.py
 # 先发送 AT+AT 切换到高级模式
 # ======== 发送数据封装（标准帧）========
 # 标准帧使用 11 位 CANID，IDE=0，RTR=0/1
-std_can_id = 0x142  # 11-bit 标准帧 CANID, 需要替换为实际的CANID
+std_can_id = 0x142  # 11-bit 标准帧 CANID, 替换为实际的CANID
 rtr_bit = 0         # 0=数据帧，1=远程帧
 # 标准帧帧标识符：Bit31-Bit21 放 CANID，Bit2=IDE，Bit1=RTR
 frame_id_val = (std_can_id << 21) | (rtr_bit << 1) | (0 << 2)
 frame_id_bytes = frame_id_val.to_bytes(4, "big")  # 4字节大端序
 dlc = 8  # 数据长度 0~8
+data_bytes=bytes([0x9C,0x00,0x00,0x00,0x00,0x00,0x00,0x00]) # 替换为实际的CAN数据
 # 高级模式完整帧：帧头(0x41 0x54) + 标识符 + DLC + 数据 + 帧尾(0x0D 0x0A)
 payload = b"\x41\x54" + frame_id_bytes + bytes([dlc]) + data_bytes[:dlc] + b"\x0D\x0A"
 
@@ -70,6 +71,7 @@ rtr_bit = 0              # 0=数据帧，1=远程帧
 frame_id_val = (ext_can_id << 3) | (rtr_bit << 1) | (1 << 2)
 frame_id_bytes = frame_id_val.to_bytes(4, "big")  # 4字节大端序
 dlc = 8  # 数据长度 0~8
+data_bytes=bytes([0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00]) # 替换为实际的CAN数据
 # 高级模式完整帧：帧头(0x41 0x54) + 标识符 + DLC + 数据 + 帧尾(0x0D 0x0A)
 payload = b"\x41\x54" + frame_id_bytes + bytes([dlc]) + data_bytes[:dlc] + b"\x0D\x0A"
 
