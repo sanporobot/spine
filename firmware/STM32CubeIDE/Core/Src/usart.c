@@ -377,6 +377,8 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 	  	HAL_UARTEx_ReceiveToIdle_DMA(&huart6, _get_rs485Brx_queue_buf(), _get_rs485rx_queue_buf_size());
 	  	__HAL_DMA_DISABLE_IT(&hdma_usart6_rx, DMA_IT_HT);
 	  }
+	  //HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+	  //HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 }
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
@@ -401,5 +403,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart6, _get_rs485Brx_queue_buf(), _get_rs485rx_queue_buf_size());
 		__HAL_DMA_DISABLE_IT(&hdma_usart6_rx, DMA_IT_HT);
 	}
+  //HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+  //HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 }
 /* USER CODE END 1 */

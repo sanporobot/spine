@@ -4,7 +4,8 @@ from typing import Optional, Tuple
 import serial
 
 
-HEADER_NORMAL = bytes([0x45, 0x54])
+HEADER_NORMAL_EXT = bytes([0x45, 0x54])
+HEADER_NORMAL_STD = bytes([0x53, 0x54])
 HEADER_ADVANCED = bytes([0x41, 0x54])
 TAIL = bytes([0x0D, 0x0A])
 
@@ -90,6 +91,21 @@ def wait_for_ok(ser: serial.Serial, total_timeout_s: float = 2.0) -> bool:
     return b"OK" in data
 
 
+def supports_passthrough_standard_frame(port: str, baudrate: int) -> bool:
+    with serial.Serial(port, baudrate=baudrate, timeout=0.1) as ser:
+        ser.reset_input_buffer()
+        ser.write(b"AT+VER")
+        ser.flush()
+        response = read_response(ser)
+
+    if not response:
+        return False
+    for token in response.replace(b"\r", b" ").replace(b"\n", b" ").split():
+        if token.startswith(b"V"):
+            return True
+    return False
+
+
 def send_and_receive(
     payload: bytes, handshake: Optional[bytes], port: str, baudrate: int
 ) -> bytes:
@@ -149,21 +165,44 @@ def build_frame_identifier(can_id: int, is_extended: bool, is_remote: bool) -> b
 
 def run_normal_mode(port: str, baudrate: int) -> None:
     print(
-        "Normal mode format: "
-        "header(0x45 0x54) + CANID(4 bytes) + data(8 bytes) + tail(0x0D 0x0A). "
-        "AT+ET to switch to normal mode."
+        "Passthrough mode format: "
+        "header(0x45 0x54 for extended / 0x53 0x54 for standard) + "
+        "CANID(4 bytes) for extend/0x00 0x00 + CANID(2 bytes) for standard + data(8 bytes) + tail(0x0D 0x0A). "
+        "AT+ET to switch to Passthrough mode."
     )
-    can_id_bytes = parse_hex_bytes(
-        "CANID 4 bytes (default 00 00 FD 01, Enter to use): ",
-        4,
-        default=bytes([0x00, 0x00, 0xFD, 0x01]),
-    )
+    support_std = supports_passthrough_standard_frame(port, baudrate)
+    warn = ""
+    if not support_std:
+        warn = (
+            "The firmware version is too old, don't support standard CAN in the "
+            "Passthrough mode, please update to V4 or try to use "
+            "Advanced mode for standard CAN frame. "
+        )
+        print(f"Warning: {warn}")
+    frame_type = input("Passthrough mode frame: [1] standard [2] extended :").strip()
+    if frame_type == "1":
+        can_id_short = parse_hex_bytes(
+            "Standard CANID 2 bytes (default 01 42, Enter to use): ",
+            2,
+            default=bytes([0x01, 0x42]),
+        )
+        can_id_bytes = bytes([0x00, 0x00]) + can_id_short
+        header = HEADER_NORMAL_STD
+    elif frame_type == "2":
+        can_id_bytes = parse_hex_bytes(
+            "Extended CANID 4 bytes (default 00 00 FD 01, Enter to use): ",
+            4,
+            default=bytes([0x00, 0x00, 0xFD, 0x01]),
+        )
+        header = HEADER_NORMAL_EXT
+    else:
+        raise ValueError("invalid Passthrough mode frame selection")
     data_bytes = parse_hex_bytes(
         "Data 8 bytes (default 00 00 00 00 00 00 00 00, Enter to use): ",
         8,
         default=bytes([0x00] * 8),
     )
-    payload = HEADER_NORMAL + can_id_bytes + data_bytes + TAIL
+    payload = header + can_id_bytes + data_bytes + TAIL
     send_and_receive(payload, handshake=b"AT+ET", port=port, baudrate=baudrate)
 
 
@@ -234,7 +273,7 @@ def main() -> None:
     port = port_input or "/dev/ttyACM0"
     baud_input = input("Baudrate (default 1000000, Enter to use): ").strip()
     baudrate = 1000000 if not baud_input else int(baud_input)
-    mode = input("Mode: [1] normal(For Extended CAN) [2] advanced(For Extended CAN & Standard CAN): ").strip()
+    mode = input("Mode: [1] Passthrough [2] Advanced: ").strip()
     if mode == "1":
         run_normal_mode(port, baudrate)
     elif mode == "2":

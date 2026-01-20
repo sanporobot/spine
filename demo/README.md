@@ -9,15 +9,16 @@
 ## <span id="p1">USB转CAN</span>
 |  模式   | 模式切换 |适用场景 | USB发送协议(USB->CAN) | USB接收协议(CAN->USB) |
 | ---------- | --------- | --------- | --------- | --------- |
-| 普通模式 | AT+ET |<div style="width: 150pt">使用CAN扩展帧</div> | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧4个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧4个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> |
-| 高级模式 | AT+AT | <div style="width: 150pt">使用CAN标准帧和扩展帧<br>使用小米电机原厂调试软件</div> | <div style="width: 150pt">固定帧头2个字节(0x41 0x54) + 帧标识符4个字节 + 帧数据长度1个字节 + 帧数据最大8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> | <div style="width: 150pt">固定帧头2个字节(0x41 0x54) + 帧标识符4个字节 + 帧数据长度1个字节 + 帧数据最大8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> |
+| 透传模式<br/>(CAN扩展帧) | AT+ET |<div style="width: 150pt">使用CAN扩展帧</div> | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧4个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧4个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> |
+| 透传模式<br/>(CAN标准帧)<br/>(请更新固件版本到V4.1以后,<br/>V4.1以前的版本不支持) | AT+ET |<div style="width: 150pt">使用CAN标准帧</div> | <div style="width: 150pt">固定帧头2个字节(0x53 0x54) + 固定2个字节(0x00 0x00) + CANID标准帧2个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> | <div style="width: 150pt">固定帧头2个字节(0x53 0x54) + 固定2个字节(0x00 0x00) + CANID标准帧2个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> |
+| 高级模式 | AT+AT | <div style="width: 150pt">同时支持CAN标准帧，扩展帧<br/>支持可变数据长度</div> | <div style="width: 150pt">固定帧头2个字节(0x41 0x54) + 帧标识符4个字节 + 帧数据长度1个字节 + 帧数据最大8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> | <div style="width: 150pt">固定帧头2个字节(0x41 0x54) + 帧标识符4个字节 + 帧数据长度1个字节 + 帧数据最大8个字节 + 固定帧尾2个字节(0x0D 0x0A)</div> |
 
 ### 说明
-- 开发板上电后，默认切换为普通模式
-- 启动小米电机调试软件，系统会自动进入高级模式，无需手动切换
-- 手动切换普通模式，发送 AT+ET 串口指令
-- 手动切换高级模式，发送 AT+AT 串口指令
-- 在集成开发前，可以使用我们的[测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)进行包括普通模式和高级模式的数据发送和接收测试
+- 开发板每次上电后，默认切换为透传模式
+- 手动切换到透传模式，发送 AT+ET 串口指令
+- 手动切换到高级模式，发送 AT+AT 串口指令
+- 发送AT+VER串口指令，可以查询固件版本
+- 在集成开发前，可以使用我们的USB转CAN测试工具 [test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py) 进行普通模式和高级模式的数据发送和接收测试
 
 ### 高级模式示例
 发送数据前请先发送 AT+AT 切换到高级模式。
@@ -30,10 +31,10 @@
 | --------- | --------- | --------- | --------- | --------- |
 | CAN标准帧ID<br>或者CAN扩展帧ID前11位 | CAN扩展帧ID后18位 | 1表示帧类型为扩展帧，0表示帧类型为标准帧 | 1表示远程帧，0表示数据帧 | 固定为0 |
 
-高级模式Python样例程序请参考[测试工具 test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)
+高级模式Python样例程序请参考USB转CAN测试工具 [test_usb2can](https://gitcode.com/sanpo/robot/blob/main/demo/test_usb2can.py)
 
 ``` Python
-#测试工具使用方法
+#USB转CAN测试工具使用方法
 pip3 install pyserial
 python3 test_usb2can.py 
 ```
@@ -91,10 +92,10 @@ ext_can_id = (frame_id_val >> 3) & 0x1FFFFFFF  # 29位扩展帧ID
 ## <span id="p2">USB串口转RS485</span>
 |  适用场景 | 发送协议 | 接收协议 |
 | --------- | --------- | --------- |
-| <div style="width: 150pt">RS485协议电机，例如宇树<br>使用宇树电机原厂调试软件</div> | <div style="width: 150pt">透传<br></div> | <div style="width: 150pt">透传<br></div> |
+| <div style="width: 150pt">RS485协议电机，例如宇树<br>支持64个字节的报文长度</div> | <div style="width: 150pt">透传<br></div> | <div style="width: 150pt">透传<br></div> |
 
 ### 说明
-- 为了区分CAN协议，帧头0x45 0x54和0x41 0x54预留给CAN协议，RS485协议的前两个字节不可以使用0x45 0x54或者0x41 0x54，其他字节没有限制
+- 为了区分CAN协议，帧头0x45 0x54,0x41 0x54和0x53 0x54预留给CAN协议，RS485协议的前两个字节不可以使用0x45 0x54或者0x41 0x54或者0x53 0x54，其他字节没有限制
 
 ### 示例代码
 **[下载地址](https://gitcode.com/sanpo/robot/blob/main/demo/usb_demo)**
@@ -106,14 +107,15 @@ ext_can_id = (frame_id_val >> 3) & 0x1FFFFFFF  # 29位扩展帧ID
 ## <span id="p3">SPI转CAN</span>
 | 适用场景 |  接线规则 | 发送协议(SPI->CAN) | 接收协议(CAN->SPI) |
 | --------- | --------- | --------- | --------- |
-| 小米等CAN协议电机 | CS1片选通道控制CAN1,CAN2<br>CS2片选通道控制CAN3,CAN4 | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧 4个字节 + CAN数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A) + 预留4个字节(0x00 0x00 0x00 0x10) + CRC1个字节</div> | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧 4个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A) + 预留4个字节(0x00 0x00 0x00 0x10) + CRC1个字节</div> |
+| CAN协议扩展帧电机 | CS1片选通道控制CAN1,CAN2<br>CS2片选通道控制CAN3,CAN4 | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧 4个字节 + CAN数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A) + 预留4个字节(0x00 0x00 0x00 0x10) + CRC1个字节</div> | <div style="width: 150pt">固定帧头2个字节(0x45 0x54) + CANID扩展帧 4个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A) + 预留4个字节(0x00 0x00 0x00 0x10) + CRC1个字节</div> |
+| CAN协议标准帧电机<br/>(请更新固件版本到V4.1以后,<br/>V4.1以前的版本不支持) | CS1片选通道控制CAN1,CAN2<br>CS2片选通道控制CAN3,CAN4 | <div style="width: 150pt">固定帧头2个字节(0x53 0x54) + 固定2个字节(0x00 0x00) + CANID标准帧2个字节 + CAN数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A) + 预留4个字节(0x00 0x00 0x00 0x10) + CRC1个字节</div> | <div style="width: 150pt">固定帧头2个字节(0x53 0x54) + 固定2个字节(0x00 0x00) + CANID标准帧2个字节 + 数据帧8个字节 + 固定帧尾2个字节(0x0D 0x0A) + 预留4个字节(0x00 0x00 0x00 0x10) + CRC1个字节</div> |
 ### 示例代码
 **[下载地址](https://gitcode.com/sanpo/robot/blob/main/demo/spi_demo/cybergear)**
 
 ## <span id="p4">SPI转RS485</span>
 | 适用场景 |  接线规则 | 发送协议(SPI->CAN) | 接收协议(CAN->SPI) |
 | --------- | --------- | --------- | --------- |
-| 宇树等RS485协议电机 | CS1片选通道控制RS485-1,RS485-2<br>CS2片选通道控制RS485-3,RS485-4 | <div style="width: 150pt">透传<br>固定长度21个字节，预留最后两个字节，最后一个字节为CRC的值，倒数第二个字节为实际有效数据长度</div> | <div style="width: 150pt">透传<br>固定长度21个字节，预留最后两个字节，最后一个字节为CRC的值，倒数第二个字节为实际有效数据长度</div> |
-- 为了区分CAN协议，帧头0x45 0x54预留给CAN协议，RS485协议的前两个字节不可以使用0x45 0x54，其他字节没有限制
+| 宇树等RS485协议电机<br/>固定报文长度21个字节<br/>前面19个字节透传 | CS1片选通道控制RS485-1,RS485-2<br>CS2片选通道控制RS485-3,RS485-4 | <div style="width: 150pt">透传<br>固定长度21个字节，预留最后两个字节，最后一个字节为CRC的值，倒数第二个字节为实际有效数据长度</div> | <div style="width: 150pt">透传<br>固定长度21个字节，预留最后两个字节，最后一个字节为CRC的值，倒数第二个字节为实际有效数据长度</div> |
+- 为了区分CAN协议，帧头0x45 0x54和0x53 0x54预留给CAN协议，RS485协议的前两个字节不可以使用0x45 0x54和0x53 0x54，其他字节没有限制
 ### 示例代码
 **[下载地址](https://gitcode.com/sanpo/robot/blob/main/demo/spi_demo/unitree)**

@@ -136,6 +136,29 @@ static int8_t CDC_Receive_FS(uint8_t* pbuf, uint32_t *Len);
 static int8_t CDC_TransmitCplt_FS(uint8_t *pbuf, uint32_t *Len, uint8_t epnum);
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
+//static uint8_t g_dtr = 0;
+//static uint8_t g_rts = 0;
+//
+//static void protocol_reset(void);
+//static void protocol_send_hello(void);
+//
+//static volatile uint8_t g_proto_inited = 0;
+//static volatile uint8_t g_proto_connected = 0;
+//
+//static void protocol_reset(void)
+//{
+//  g_proto_inited = 0;
+//  g_proto_connected = 0;
+//
+//  // 如果你后面会做帧解析，这里要把相关变量归零
+//  // e.g. g_rx_len = 0; g_state = WAIT_HEADER; g_crc = 0;
+//}
+//
+//static void protocol_send_hello(void)
+//{
+//  const char msg[] = "READY\r\n";   // 先用 ASCII，后面抓到协议再改成二进制握手
+//  CDC_Transmit_FS((uint8_t*)msg, (uint16_t)(sizeof(msg) - 1u));
+//}
 
 /* USER CODE END PRIVATE_FUNCTIONS_DECLARATION */
 
@@ -267,7 +290,26 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
     break;
 
     case CDC_SET_CONTROL_LINE_STATE:
-
+//      // ⚠️ 关键点：DTR/RTS 在 SETUP 包的 wValue
+//      uint16_t wValue = hUsbDeviceFS.request.wValue;
+//
+//      uint8_t new_dtr = (wValue & 0x0001u) ? 1u : 0u;
+//      uint8_t new_rts = (wValue & 0x0002u) ? 1u : 0u;
+//
+//      uint8_t dtr_rise = (g_dtr == 0u && new_dtr == 1u) ? 1u : 0u;
+//
+//      g_dtr = new_dtr;
+//      g_rts = new_rts;
+//
+//      if (dtr_rise)
+//      {
+//        protocol_reset();
+//        protocol_send_hello();
+//      }
+//      else if (g_dtr == 0u)
+//      {
+//        protocol_reset();
+//      }
     break;
 
     case CDC_SEND_BREAK:

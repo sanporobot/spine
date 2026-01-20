@@ -258,5 +258,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 	{
 		error_assert(ERR_HAL_SPI_TransmitReceive_IT);
 	}
+  //HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
 }
 /* USER CODE END 1 */

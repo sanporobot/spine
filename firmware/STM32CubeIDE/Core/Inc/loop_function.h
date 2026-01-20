@@ -36,6 +36,8 @@ uint8_t _push_canrx_queue(void);
 
 uint8_t* _get_cdc_cmd_atok();
 uint32_t _get_cdc_cmd_atok_length();
+uint8_t* _get_cdc_cmd_atver();
+uint32_t _get_cdc_cmd_atver_length();
 
 void _set_rs485a_tx(void);
 void _set_rs485b_tx(void);

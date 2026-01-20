@@ -291,6 +291,18 @@ void StartCDCRXTask(void *argument)
   				error_assert(ERR_CDCTX_BUSY);
   			}
   			break;
+  		case 22:
+  			if(((USBD_CDC_HandleTypeDef*)(hUsbDeviceFS.pClassData))->TxState == 0)
+  			{
+  				USBD_CDC_SetTxBuffer(&hUsbDeviceFS, _get_cdc_cmd_atver(), _get_cdc_cmd_atver_length());
+  				USBD_CDC_TransmitPacket(&hUsbDeviceFS);
+  				_pop_cdcrx_queue();
+  			}
+  			else
+  			{
+  				error_assert(ERR_CDCTX_BUSY);
+  			}
+  			break;
   		default:
   			error_assert_int(ret);
   	}
