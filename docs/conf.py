@@ -67,3 +67,24 @@ intersphinx_mapping = {
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+html_theme_options = {
+    'collapse_navigation': False,
+    'navigation_depth': 2,
+}
+
+html_css_files = [
+    'lang-switcher.css',
+]
+
+html_js_files = [
+    'lang-switcher.js',
+]
+
+html_sidebars = {
+    '**': [
+        'localtoc.html',
+        'relations.html',
+        'searchbox.html',
+    ],
+}

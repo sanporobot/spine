@@ -1,0 +1,23 @@
+.lang-switcher {
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.lang-switcher a {
+  text-decoration: none;
+  margin-left: 6px;
+  color: #007acc;
+  font-weight: 600;
+}
+
+.lang-switcher a:hover {
+  text-decoration: underline;
+}
+
+.lang-switcher-inline {
+  margin: 6px 0 12px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: inline-block;
+}

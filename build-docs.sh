@@ -17,8 +17,8 @@ source "${VENV_DIR}/bin/activate"
 # python3 -m pip install -r "${DOCS_DIR}/requirements.txt"
 
 # Build Chinese and English docs
-python3 -m sphinx -b html -D language=zh_CN "${DOCS_DIR}" "${DOCS_DIR}/_build/html/zh"
-python3 -m sphinx -b html -D language=en "${DOCS_DIR}" "${DOCS_DIR}/_build/html/en"
+python3 -m sphinx -b html -D language=zh_CN -c "${DOCS_DIR}" "${DOCS_DIR}/zh" "${DOCS_DIR}/_build/html/zh"
+python3 -m sphinx -b html -D language=en -c "${DOCS_DIR}" "${DOCS_DIR}/en" "${DOCS_DIR}/_build/html/en"
 
 echo "Build complete:"
 echo "  ${DOCS_DIR}/_build/html/zh"

@@ -1,0 +1,9 @@
+{% extends "!layout.html" %}
+
+{% block content %}
+  <div id="lang-switcher-placeholder" class="lang-switcher lang-switcher-inline">
+    <a class="lang-link" data-lang="zh" href="#">中文</a>
+    <a class="lang-link" data-lang="en" href="#">English</a>
+  </div>
+  {{ super() }}
+{% endblock %}
