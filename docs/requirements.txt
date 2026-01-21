@@ -1,5 +1,6 @@
 sphinx
-sphinx-intl
+sphinx-intl>=2.1.0
+babel>=2.12
 myst-parser
-furo
+sphinx-rtd-theme
 jieba
