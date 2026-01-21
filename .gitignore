@@ -1,0 +1,20 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Sphinx build output
+docs/_build/
+
+# Sphinx translation build artifacts
+docs/locale/**/*.mo
+
+# Local venv created inside docs (avoid committing)
+docs/Lib/
+docs/Scripts/
+docs/Include/
+docs/pyvenv.cfg
+
+# OS metadata
+.DS_Store
+Thumbs.db

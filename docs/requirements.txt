@@ -1,0 +1,5 @@
+sphinx
+sphinx-intl
+myst-parser
+furo
+jieba
